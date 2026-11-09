@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@theme {
+  --color-abyss: #001D39;
+  --color-deep: #0A4174;
+  --color-steel: #49769F;
+  --color-teal: #4E8EA2;
+  --color-mist: #6EA2B3;
+  --color-sky: #7BBDE8;
+  --color-ice: #BDD8E9;
+
+  --font-serif: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  background: #001D39;
+}
+
+body {
+  background: #001D39;
+  color: #bdd8e9;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #7bbde8;
+  color: #001d39;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #001d39;
+}
+::-webkit-scrollbar-thumb {
+  background: #0a4174;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7bbde8;
+}
+
+/* Champ de formulaire dans le style du site : souligné, sans boîte. */
+@utility champ {
+  width: 100%;
+  border-bottom: 1px solid color-mix(in oklab, var(--color-ice) 30%, transparent);
+  background: transparent;
+  padding: 0.55rem 0.25rem;
+  color: var(--color-ice);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Apparition du logo sur la page de chargement. */
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

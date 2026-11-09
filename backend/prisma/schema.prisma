@@ -1,0 +1,49 @@
+// Schéma Prisma 7 — PostgreSQL managé Neon.
+// L'URL de connexion est fournie par prisma.config.ts (DATABASE_URL) :
+// Prisma 7 n'utilise plus de moteur Rust, `url` n'est donc pas déclaré ici.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum CategorieProjet {
+  WEB
+  MOBILE
+  DESIGN
+}
+
+/// Compte unique du dashboard. Le mot de passe n'est jamais stocké en clair :
+/// hash scrypt salé (voir src/auth/password.util.ts).
+model AdminUser {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  motDePasseHash String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+/// Projet affiché sur le site public ; le dashboard crée, modifie et supprime ces lignes.
+model Project {
+  id          String          @id @default(uuid())
+  titre       String
+  sousTitre   String
+  description String?
+  stack       String[]
+  annee       String
+  categorie   CategorieProjet @default(WEB)
+  /// URL externe ou chemin servi par le site (ex. /projets/cofe-cesa.png)
+  image       String?
+  lien        String?
+  publie      Boolean         @default(true)
+  ordre       Int             @default(0)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([publie, ordre])
+  @@index([categorie])
+}
