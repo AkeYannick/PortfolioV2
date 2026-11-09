@@ -51,7 +51,7 @@ async function principal() {
     // que de servir une API sans administrateur.
     await app.get(AuthService).garantirAdmin();
 
-    await app.listen(env.port);
+    await app.listen(env.port, "0.0.0.0");
     console.log(`API prête sur le port ${env.port} (origines autorisées : ${env.originesAutorisees.join(", ")})`);
 }
 
