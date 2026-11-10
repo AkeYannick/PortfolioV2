@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette — de la fiche couleur */
+  --color-abyss: #001D39;  /* fond principal */
+  --color-deep: #0A4174;   /* bleu profond */
+  --color-steel: #49769F;  /* bleu acier */
+  --color-teal: #4E8EA2;   /* bleu sarcelle */
+  --color-mist: #6EA2B3;   /* brume */
+  --color-sky: #7BBDE8;    /* accent principal */
+  --color-ice: #BDD8E9;    /* texte clair */
+
+  --font-serif: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}
+
+html{
+  scroll-behavior: smooth;
+  background: #001D39;
+}
+
+body {
+  overflow-x: hidden;
+  background: #001D39;
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #7BBDE8;
+  color: #001D39;
+}
+
+/* Scrollbar cohérente avec le thème abyss / bleu glacier */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #001D39;
+}
+::-webkit-scrollbar-thumb {
+  background: #0A4174;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #7BBDE8;
+}
+
+/* ---------- Keyframes ---------- */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(123, 189, 232, 0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(123, 189, 232, 0); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Reveal on scroll ---------- */
+
+.reveal {
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal-up { opacity: 0; transform: translateY(28px); }
+.reveal-scale { opacity: 0; transform: scale(0.94); }
+.reveal-left { opacity: 0; transform: translateX(-32px); }
+.reveal-right { opacity: 0; transform: translateX(32px); }
+
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .animate-float, .animate-float-slow, .animate-fade-in,
+  .animate-scale-in, .animate-slide-down, .animate-pulse-glow {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---------- Classes utilitaires d'animation ---------- */
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out both;
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-scale-in {
+  animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-slide-down {
+  animation: slideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+.animate-pulse-glow {
+  animation: pulseGlow 2.4s ease-in-out infinite;
+}
+.animate-spin-slow {
+  animation: spinSlow 12s linear infinite;
+}
+
+.gradient-animated {
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Sous-titre soulignement animé (navbar, liens) */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 100%;
+  background: #7BBDE8;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Effet de brillance au survol des boutons */
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: translateX(-150%) skewX(-20deg);
+  transition: transform 0.6s ease;
+}
+.shine:hover::before {
+  transform: translateX(280%) skewX(-20deg);
+}
+
+/* Décalage de scroll pour compenser la navbar fixe (ancre #section) */
+.scroll-offset {
+  scroll-margin-top: 6rem;
+}
